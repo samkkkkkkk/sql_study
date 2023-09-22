@@ -87,9 +87,7 @@ SELECT
     CONCAT(first_name, last_name) AS 이름,
     REPLACE(hire_date, '/', '') AS 입사일자
 FROM employees
-ORDER BY first_name ASC;
-
-
+ORDER BY 이름 ASC;
 
 /*
 문제 2.
@@ -98,7 +96,8 @@ EMPLOYEES 테이블에서 phone_number컬럼은 ###.###.####형태로 저장되어 있다
 전화 번호를 출력하도록 쿼리를 작성하세요. (CONCAT, SUBSTR, LENGTH 사용)
 */
 SELECT 
-    CONCAT('(02)',SUBSTR(phone_number,4))
+    phone_number,
+    CONCAT('(02)',SUBSTR(phone_number,4)) AS phone_number
 FROM employees;
 
 /*
@@ -111,7 +110,7 @@ EMPLOYEES 테이블에서 JOB_ID가 it_prog인 사원의 이름(first_name)과 급여(salary)를
 이 열의 열 별칭은 salary입니다.(힌트 : lpad 이용)
 */
 SELECT 
-    RPAD(SUBSTR(first_name,1,3), 10, '*') AS name,
+    RPAD(SUBSTR(first_name,1,3), LENGTH(first_name), '*') AS name,
     LPAD(salary, 10, '*') AS salary
 FROM employees
 WHERE LOWER(job_id) = 'it_prog';
