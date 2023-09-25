@@ -1,7 +1,7 @@
 
 --숫자함수
 --ROUND(반올림)
---원하는 반올림 위치를 매개값으로 지정. 함수를 주는 것도 가능
+--원하는 반올림 위치를 매개값으로 지정. 함수를 주는 것도 가능  
 SELECT
     ROUND(3.1415, 3), ROUND(45.9236, 0), ROUND(45.923,-1)
 FROM dual;
@@ -14,7 +14,7 @@ FROM dual;
 
 -- abs (절대값)
 SELECT ABS(-34) FROM dual;
-
+                             
 -- CELL(올림), FLOOR(내림)
 SELECT  CEIL(3.14), FLOOR(3.14)
 FROM dual;

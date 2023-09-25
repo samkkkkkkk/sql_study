@@ -6,6 +6,9 @@ SELECT TO_CHAR(sysdate) FROM dual;
 SELECT TO_CHAR(sysdate, 'YYYY-MM-DD DY PM HH:MI:SS') FROM dual;
 SELECT TO_CHAR(sysdate, 'YY-MM-DD   HH24:MI:SS') FROM dual;
 
+SELECT TO_CHAR(sysdate, 'YYYY-MM-DD DY PM HH:MI:SS') FROM dual;
+SELECT TO_CHAR(sysdate, 'YYYY"년" MM"월" DD"일" HH24"시"') FROM dual;
+
 
 -- 서식문자와 함께 사용하고 싶은 문자를 ""로 묶어 전달합니다.
 SELECT
@@ -63,8 +66,6 @@ SELECT
     first_name,
     NVL2(commission_pct, 'true', 'false')
 FROM employees;
-
-
 
 SELECT 
     first_name,
