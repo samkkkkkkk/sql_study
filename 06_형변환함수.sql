@@ -103,6 +103,8 @@ SELECT
     ) AS result
 FROM employees;
 
+
+
 -- CASE WHEN THEN END
 SELECT 
     first_name,

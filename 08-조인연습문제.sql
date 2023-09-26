@@ -117,24 +117,34 @@ WHERE employee_id IS NULL;
 힌트) EMPLOYEES 테이블과 EMPLOYEES 테이블을 조인하세요.
 */
 SELECT 
-    e1.first_name,
+    e1.first_name, e1.manager_id,
     e2.first_name AS manager_name
 FROM employees e1 JOIN employees e2
-ON e1.manager_id = e2.manager_id;
+ON e1.manager_id = e2.employee_id
+ORDER BY e2.manager_id;
+
+SELECT 
+    e1.first_name, e1.manager_id,
+    e2.first_name AS manager_name
+FROM employees e1 JOIN employees e2
+ON e1.manager_id = e2.manager_id
+ORDER BY e2.manager_id;
 /*
 문제 11. 
 -- EMPLOYEES 테이블에서 left join하여 관리자(매니저)id와, 매니저의 이름, 매니저의 급여 까지 출력하세요
 --매니저 아이디가 없는 사람은 배제하고 급여는 역순으로 출력하세요
 */
 SELECT 
-    e1.employee_id, e1.manager_id, e1.first_name,
-    e2.first_name AS manager_name, e2.salary
+    e1.employee_id, e1.manager_id, e1.first_name AS e1_name,
+    e2.first_name AS e2_name, e2.salary
 FROM employees e1 LEFT JOIN employees e2
 ON e1.manager_id = e2.employee_id
 WHERE e1.manager_id IS NOT NULL
 ORDER BY e2.salary DESC;
 
-
+SELECT 
+    manager_id, first_name , employee_id
+FROM employees;
 
 
 
