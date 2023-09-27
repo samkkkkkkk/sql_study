@@ -97,7 +97,6 @@ ORDER BY employee_id;
 ROLLBACK;
 -----------------------------------------------------------
 
-
 -- 문제 1.
 CREATE TABLE depts AS
 (SELECT * FROM departments);
@@ -143,7 +142,7 @@ WHERE department_name IN ('개발', '회계부', '재정', '인사', '영업');
 -- 문제 3
 DELETE FROM depts
 WHERE department_id IN (SELECT department_id FROM depts
-       WHERE department_name IN ('영업', 'NOC'));
+                        WHERE department_name IN ('영업', 'NOC'));
 
 --문제 4-1   
 DELETE FROM depts
@@ -197,6 +196,10 @@ WHEN NOT MATCHED THEN
     (b.job_id, b.job_title, b.min_salary, b.max_salary);
 
 SELECT * FROM job_it;
+
+
+
+
     
     
 
