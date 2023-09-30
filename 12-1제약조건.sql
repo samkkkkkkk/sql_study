@@ -67,6 +67,8 @@ CREATE TABLE dept2(
 -- pk 추가
 ALTER TABLE dept2 ADD CONSTRAINT dept_no_pk PRIMARY KEY(dept_no);
 DESC dept2;
+
+ALTER TABLE dept2 ADD CONSTRAINT
 -- fk 추가
 ALTER TABLE dept2 ADD CONSTRAINT dept2_loca_locid_fk 
 FOREIGN KEY(loca) REFERENCES locations(location_id);
@@ -127,7 +129,13 @@ SELECT * FROM members;
 
 -----------------------------------------------------------
 
-
+CREATE TABLE members (
+    m_name VARCHAR2(10) NOT NULL,
+    m_num NUMBER(3),
+    reg_date DATE NOT NULL,
+    gender VARCHAR(1),
+    loca NUMBER(10)
+)
 
 
 

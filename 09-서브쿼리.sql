@@ -28,6 +28,7 @@ WHERE  salary > (SELECT salary FROM employees
 SELECT * FROM employees
 WHERE job_id = (SELECT job_id FROM employees
                 WHERE employee_id = 103);
+                
 
 -- 다음 문장은 서브쿼리가 리턴하는 행이 여러 개라서 단일행 연사자를 사용할 수 없습니다.
 -- 단일 행 연산자: 주로 비교 연산자 (=, >, <, >=, <= <>)를 사용하는 경우 하나의 행만 반환해야 합니다.
@@ -35,6 +36,7 @@ WHERE job_id = (SELECT job_id FROM employees
 SELECT * FROM employees
 WHERE job_id = (SELECT job_id FROM employees
                 WHERE job_id = 'IT_PROG'); -- 에러
+                
 
 -- 다중 행 연산자 (IN, ANY, ALL)
 -- IN: 조회된 목록의 어떤 값고 같은 지를 확인합니다.                
@@ -64,10 +66,7 @@ WHERE salary > ALL(SELECT salary FROM employees
 SELECT * FROM employees e
 WHERE EXISTS (SELECT 1 FROM job_history jh
               WHERE e.employee_id = jh.employee_id);
-              
-SELECT 1 FROM job_history;
-
-SELECT * FROM employees
+SELECT * FROM employees 
 WHERE EXISTS (SELECT 1 FROM departments
               WHERE department_id = 10);
               
@@ -83,6 +82,7 @@ FROM employees e
 LEFT JOIN departments d
 ON e.department_id = d.department_id
 ORDER BY first_name ASC;
+
 
 SELECT 
     e.first_name,
@@ -137,6 +137,7 @@ SELECT
         GROUP BY department_id
     ) AS 사원수
 FROM departments d;
+
 
 ---------------------------------------------------------------------
 

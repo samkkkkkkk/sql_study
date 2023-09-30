@@ -86,6 +86,7 @@ SELECT
 FROM employees
 GROUP by job_id;
 
+
 SELECT 
     job_id,
     AVG(salary) AS 평균
@@ -120,6 +121,7 @@ FROM employees
 WHERE salary >= 5000
 GROUP BY department_id
 HAVING AVG(salary) >= 7000;
+
 /*
 문제 4.
 사원 테이블에서 commission_pct(커미션) 컬럼이 null이 아닌 사람들의
@@ -127,6 +129,8 @@ department_id(부서별) salary(월급)의 평균, 합계, count를 구합니다.
 조건 1) 월급의 평균은 커미션을 적용시킨 월급입니다.
 조건 2) 평균은 소수 2째 자리에서 절삭 하세요.
 */
+
+
 
 SELECT 
     department_id AS 부서,

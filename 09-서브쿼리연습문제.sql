@@ -7,10 +7,16 @@
 -EMPLOYEES 테이블에서 job_id가 IT_PROG인 사원들의 평균급여보다 높은 사원들의 
 데이터를 출력하세요
 */
+
+SELECT AVG(salary) FROM employees;
+
+
+
 SELECT
     *
 FROM employees
 WHERE salary > ANY(SELECT AVG(salary)FROM employees);
+
 
 SELECT
     COUNT(*)
@@ -40,6 +46,7 @@ WHERE department_id = (SELECT department_id FROM departments
 출력하세요
 -EMPLOYEES테이블에서 “James”(2명)들의 manager_id를 갖는 모든 사원의 데이터를 출력하세요.
 */
+
 SELECT
    * 
 FROM employees
@@ -54,6 +61,7 @@ WHERE manager_id IN (SELECT manager_id FROM employees
 -EMPLOYEES테이블 에서 first_name기준으로 내림차순 정렬하고, 41~50번째 데이터의 
 행 번호, 이름을 출력하세요
 */
+
 SELECT * FROM
     (
         SELECT 
@@ -90,6 +98,7 @@ employees테이블 departments테이블을 left 조인하세요
 조건) 직원아이디, 이름(성, 이름), 부서아이디, 부서명 만 출력합니다.
 조건) 직원아이디 기준 오름차순 정렬
 */
+
 SELECT
     employee_id,
     e.first_name || ' ' || e.last_name AS full_name,
@@ -104,6 +113,7 @@ ORDER BY e.employee_id ASC;
 문제 7.
 문제 6의 결과를 (스칼라 쿼리)로 동일하게 조회하세요
 */
+
 SELECT e.employee_id,
     (
         SELECT
@@ -153,7 +163,6 @@ ORDER BY d.department_id;
 문제 8의 결과를 (스칼라 쿼리)로 동일하게 조회하세요
 */
 
-
 SELECT d.department_id,d.department_name,d.manager_id,d.location_id,
  
     (
@@ -187,6 +196,7 @@ locations테이블 countries 테이블을 left 조인하세요
 조건) 로케이션아이디, 주소, 시티, country_id, country_name 만 출력합니다
 조건) country_name기준 오름차순 정렬
 */
+
 SELECT
    loc.location_id, loc.street_address, loc.country_id,
    c.country_name
@@ -199,6 +209,7 @@ ORDER BY c.country_name ASC;
 문제 11.
 문제 10의 결과를 (스칼라 쿼리)로 동일하게 조회하세요
 */
+
 SELECT
     loc.location_id, loc.street_address, loc.city, loc.country_id,
     (
@@ -219,11 +230,52 @@ employees테이블, departments테이블을 left조인 hire_date를 오름차순 기준으로
 조건) hire_date를 기준으로 오름차순 정렬 되어야 합니다. rownum이 틀어지면 안됩니다.
 */
 
+SELECT
+    ROWNUM AS rn, tbl.*
+    FROM
+( 
+SELECT 
+    e.employee_id, e.first_name,
+    e.phone_number, e.hire_date,
+    d.department_id, d.department_name
+    
+FROM employees e
+LEFT JOIN departments d
+ON e.department_id = d.department_id
+ORDER BY hire_date ASC
+) tbl
+WHERE ROWNUM BETWEEN 1 AND 10; 
+
+
 /*
 문제 13. 
 --EMPLOYEES 와 DEPARTMENTS 테이블에서 JOB_ID가 SA_MAN 사원의 정보의 LAST_NAME, JOB_ID, 
 DEPARTMENT_ID,DEPARTMENT_NAME을 출력하세요.
 */
+SELECT * FROM employees
+WHERE job_id = 'SA_MAN';
+
+SELECT 
+    e.last_name, e.job_id,
+    d.department_id, d.department_name
+FROM employees e
+JOIN departments d
+ON e.department_id = d.department_id
+WHERE e.job_id = 'SA_MAN';
+
+
+
+SELECT
+    e.last_name, e.job_id, e.department_id,
+    (
+        SELECT 
+            d.department_name
+        FROM departments d
+        WHERE d.department_id = e.department_id
+    )
+FROM employees e
+WHERE e.job_id = 'SA_MAN';
+
 
 /*
 문제 14
@@ -232,11 +284,43 @@ DEPARTMENT_ID,DEPARTMENT_NAME을 출력하세요.
 --사람이 없는 부서는 출력하지 뽑지 않습니다.
 */
 
+SELECT 
+    *
+FROM
+    (
+        SELECT
+        department_id,
+        COUNT(*) AS 사원수
+        FROM employees
+        GROUP BY department_id
+        HAVING COUNT(*) IS NOT NULL
+    )tbl
+ORDER BY 사원수 DESC;
+
+SELECT
+    COUNT(*),
+    (
+        SELECT
+            employee_id
+        FROM employees e
+        WHERE e.department_id = d.department_id
+    )
+FROM departments d
+GROUP BY d.department_id;
+
+
+
+
 /*
 문제 15
 --부서에 대한 정보 전부와, 주소, 우편번호, 부서별 평균 연봉을 구해서 출력하세요.
 --부서별 평균이 없으면 0으로 출력하세요.
 */
+
+SELECT
+    
+
+
 
 /*
 문제 16
