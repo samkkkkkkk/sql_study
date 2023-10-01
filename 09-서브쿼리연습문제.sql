@@ -284,41 +284,58 @@ WHERE e.job_id = 'SA_MAN';
 --사람이 없는 부서는 출력하지 뽑지 않습니다.
 */
 
-SELECT 
+SELECT
     *
 FROM
     (
-        SELECT
-        department_id,
-        COUNT(*) AS 사원수
-        FROM employees
-        GROUP BY department_id
-        HAVING COUNT(*) IS NOT NULL
-    )tbl
-ORDER BY 사원수 DESC;
-
-SELECT
-    COUNT(*),
-    (
-        SELECT
-            employee_id
-        FROM employees e
-        WHERE e.department_id = d.department_id
+        SELECT 
+            d.department_id, d.department_name, d.manager_id,
+            (
+                SELECT COUNT(*)
+                FROM employees e
+                WHERE e.department_id = d.department_id
+            )AS 인원수
+        FROM departments d
+        ORDER BY 인원수 DESC
     )
-FROM departments d
-GROUP BY d.department_id;
-
-
-
+WHERE 인원수 <> 0
+;
 
 /*
 문제 15
 --부서에 대한 정보 전부와, 주소, 우편번호, 부서별 평균 연봉을 구해서 출력하세요.
 --부서별 평균이 없으면 0으로 출력하세요.
 */
-
 SELECT
-    
+    tbl.department_id, tbl.department_name,
+    tbl.manager_id, tbl.location_id,
+    주소, 우편번호,
+    NVL(TRUNC(평균연봉, 2), 0) AS 평균연봉
+FROM
+        (
+            SELECT
+               d.*,
+            (
+                SELECT AVG(salary)
+                FROM employees e
+                WHERE e.department_id = d.department_id
+            ) AS 평균연봉,
+            (
+                SELECT loc.street_address
+                FROM locations loc
+                WHERE d.location_id = loc.location_id
+            ) AS 주소,
+            (
+                SELECT loc.postal_code
+                FROM locations loc
+                WHERE d.location_id = loc.location_id
+            ) AS 우편번호
+            FROM departments d
+        )tbl
+;
+       
+
+
 
 
 
@@ -327,6 +344,40 @@ SELECT
 -문제 15 결과에 대해 DEPARTMENT_ID기준으로 내림차순 정렬해서 
 ROWNUM을 붙여 1-10 데이터 까지만 출력하세요.
 */
+
+SELECT *
+FROM
+    (
+        SELECT
+            ROWNUM AS rn, d.department_id, d.department_name,
+            d.manager_id, d.location_id,
+            주소, 우편번호,
+            NVL(TRUNC(평균연봉, 2), 0)
+        FROM
+            (
+                SELECT 
+                    d.*,
+                    (
+                        SELECT AVG(salary)
+                        FROM employees e
+                        WHERE e.department_id = d.department_id
+                    )AS 평균연봉,
+                    (
+                        SELECT loc.street_address
+                        FROM locations  loc
+                        WHERE loc.location_id = d.location_id
+                    )AS 주소 ,
+                    (
+                        SELECT loc.postal_code
+                        FROM locations loc
+                        WHERE loc.location_id = d.location_id
+                    )AS 우편번호
+                FROM departments d) d
+                ORDER BY d.department_id DESC
+            )
+WHERE rn BETWEEN 1 AND 12;
+    
+
 
 
 
