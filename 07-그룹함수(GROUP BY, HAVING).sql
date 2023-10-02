@@ -130,8 +130,6 @@ department_id(부서별) salary(월급)의 평균, 합계, count를 구합니다.
 조건 2) 평균은 소수 2째 자리에서 절삭 하세요.
 */
 
-
-
 SELECT 
     department_id AS 부서,
     TRUNC(AVG(salary + salary * commission_pct), 2) AS 평균월급,

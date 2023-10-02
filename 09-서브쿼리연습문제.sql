@@ -246,6 +246,21 @@ ORDER BY hire_date ASC
 ) tbl
 WHERE ROWNUM BETWEEN 1 AND 10; 
 
+SELECT * FROM
+(
+SELECT ROWNUM AS rn, d.*
+FROM
+    (
+        SELECT
+            e.employee_id, e.first_name, e.phone_number,
+            e.hire_date, d.department_id, d.department_name
+        FROM employees e LEFT JOIN departments d
+        ON e.department_id = d.department_id
+        ORDER BY hire_date ASC
+    )d
+)
+WHERE rn > 0 AND rn <= 10;
+
 
 /*
 문제 13. 
@@ -272,9 +287,21 @@ SELECT
             d.department_name
         FROM departments d
         WHERE d.department_id = e.department_id
-    )
+    ) department_name
 FROM employees e
 WHERE e.job_id = 'SA_MAN';
+
+SELECT
+    tbl.*, d.department_id
+FROM
+(
+    SELECT
+    last_name, job_id, department_id
+    FROM employees
+    WHERE job_id = 'SA_MAN'
+)tbl
+JOIN departments d
+ON tbl.department_id = d.department_id;
 
 
 /*
@@ -300,6 +327,39 @@ FROM
     )
 WHERE 인원수 <> 0
 ;
+
+-- 조인 방법
+SELECT
+    d.department_id, d.department_name, d.manager_id,
+    a.total
+FROM departments d
+JOIN
+    (
+    SELECT
+        department_id, COUNT(*) AS total
+    FROM employees
+    GROUP BY department_id
+    ) a
+ON d.department_id = a.department_id
+ORDER BY  a.total DESC;
+
+
+SELECT 
+    d.department_id, d.department_name, d.manager_id,
+    (
+        SELECT
+            COUNT(*)
+        FROM employees e
+        WHERE e.department_id = d.department_id
+    )AS total
+FROM departments d
+ORDER BY total DESC;
+
+
+
+
+
+
 
 /*
 문제 15
@@ -333,10 +393,37 @@ FROM
             FROM departments d
         )tbl
 ;
-       
-
-
-
+------
+SELECT
+    d.*,
+    loc.street_address, loc.postal_code,
+    NVL(tbl.result, 0) AS 부서별평균급여
+FROM departments d
+JOIN locations loc
+ON d.location_id = loc.location_id
+LEFT JOIN
+    (
+    SELECT 
+        department_id,
+        TRUNC(AVG(salary), 2) AS result
+    FROM employees
+    GROUP BY department_id
+    ) tbl
+ON d.department_id = tbl.department_id;
+-------
+SELECT
+    d.*,
+    loc.street_address, loc.postal_code,
+    NVL(
+    (
+        SELECT TRUNC(AVG(e.salary), 0)
+        FROM employees e
+        WHERE e.department_id = d.department_id
+    ),
+    0) AS 부서별평균급여
+FROM departments d
+JOIN locations loc
+ON d.location_id = loc.location_id;
 
 
 /*
@@ -376,9 +463,31 @@ FROM
                 ORDER BY d.department_id DESC
             )
 WHERE rn BETWEEN 1 AND 12;
-    
 
-
-
-
-
+-------
+SELECT *
+FROM
+    (
+    SELECT ROWNUM AS rn, tbl2.*
+    FROM
+        (
+        SELECT
+            d.*,
+            loc.street_address, loc.postal_code,
+            NVL(tbl.result, 0) AS 부서별평균급여
+        FROM departments d
+        JOIN locations loc
+        ON d.location_id = loc.location_id
+        LEFT JOIN
+            (
+            SELECT 
+                department_id,
+                TRUNC(AVG(salary), 0) AS result
+            FROM employees
+            GROUP BY department_id
+            ) tbl
+        ON d.department_id = tbl.department_id
+        ORDER BY d.department_id DESC
+        ) tbl2
+    )
+WHERE rn >0 AND rn <=10;
