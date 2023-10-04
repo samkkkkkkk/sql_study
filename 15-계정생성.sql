@@ -50,7 +50,6 @@ REVOKE SELECT ANY TABLE FROM user1;
 -- DROP USER [유저이름] CASCADE;
 -- CASCADE 없을 시 -> 테이블 or 시퀀스 등 객체가 존재한다면 계정 삭제 안됨.
 DROP USER user1 CASCADE;
-
 /*
 테이블 스페이스는 데이터베이스 객체 내 실제 데이터가 저장되는 공간입니다.
 테이블 스페이스를 생성하면 지정된 경로에 실제 파일로 정의한 용량만큼의

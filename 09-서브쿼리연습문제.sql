@@ -278,8 +278,6 @@ JOIN departments d
 ON e.department_id = d.department_id
 WHERE e.job_id = 'SA_MAN';
 
-
-
 SELECT
     e.last_name, e.job_id, e.department_id,
     (
@@ -353,9 +351,20 @@ SELECT
         WHERE e.department_id = d.department_id
     )AS total
 FROM departments d
+WHERE manager_id IS NOT NULL
 ORDER BY total DESC;
 
-
+SELECT
+    d.department_id, d.department_name, d.manager_id,
+    (
+        SELECT
+            COUNT(*) 
+        FROM employees e
+        WHERE e.department_id = d.department_id
+    ) AS total
+FROM departments d
+WHERE d.manager_id IS NOT NULL
+ORDER BY total DESC;
 
 
 

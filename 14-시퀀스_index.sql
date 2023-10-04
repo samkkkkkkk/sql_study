@@ -55,7 +55,6 @@ SELECT * FROM employees WHERE salary = 12008;
 -- 인덱스 생성
 CREATE INDEX emp_salary_idx ON employees(salary);
 
-
 /*
 테이블 조회 시 인덱스가 붙은 컬럼을 조건절로 사용한다면
 테이블 전체 조회가 아닌, 컬럼에 붙은 인덱스를 이용해서 조회를 진행합니다.

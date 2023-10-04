@@ -29,6 +29,20 @@ END;
 */
 
 DECLARE
+    emp_id employees.employee_id%TYPE;
+BEGIN
+    SELECT
+    MAX(employee_id)
+    INTO emp_id
+    FROM employees;
+    
+    INSERT INTO emps
+    (employee_id, last_name, email, hire_date, job_id)
+    VALUES(emp_id + 2, 'Kim', 'kkk', sysdate, '300');
+END;
+
+
+DECLARE
     emp_id employees.employee_id%TYPE;    
 BEGIN
     SELECT 

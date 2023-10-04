@@ -28,7 +28,6 @@ BEGIN
     DBMS_OUTPUT.put_line('A: ' || TO_CHAR(A));
 END;
 
-
 /*
 - DML문
 DDL문은 사용이 불가능하고, 일반적으로 SQL문의 SELECT 등을 사용하는데, 
@@ -52,7 +51,6 @@ BEGIN
     DBMS_OUTPUT.put_line(v_emp_name || '-' || v_dep_name);
     
 END;
-
 
 -- 해당 테이블과 같은 타입의 컬럼 변수를 선언하려면
 -- 테이블명.컬럼명%TYPE을 사용함으로써 타입을 일일히 확인해야 하는 번거로움을 방지할 수 있다.
