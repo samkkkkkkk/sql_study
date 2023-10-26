@@ -85,7 +85,7 @@ SELECT * FROM
                 ROWNUM AS rn, tbl.*
         FROM (
                 SELECT
-                    employee_id, first_name, phone_number
+                    employee_id, first_name, phone_number,hire_date
                 FROM employees
                 ORDER BY hire_date ASC
         )tbl
@@ -326,6 +326,7 @@ FROM
 WHERE 인원수 <> 0
 ;
 
+
 -- 조인 방법
 SELECT
     d.department_id, d.department_name, d.manager_id,
@@ -341,6 +342,11 @@ JOIN
 ON d.department_id = a.department_id
 ORDER BY  a.total DESC;
 
+SELECT 
+    b.*, COUNT(*) AS 댓글수
+FROM board b LEFT JOIN 댓글 d
+ON b.bno(PK) = d.bno(FK)
+GROUP BY b.bno(pk);
 
 SELECT 
     d.department_id, d.department_name, d.manager_id,

@@ -142,6 +142,9 @@ ON e1.manager_id = e2.employee_id
 WHERE e1.manager_id IS NOT NULL
 ORDER BY e2.salary DESC;
 
+
+
+
 SELECT 
     manager_id, first_name , employee_id
 FROM employees;

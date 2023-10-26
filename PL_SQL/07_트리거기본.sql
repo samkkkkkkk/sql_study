@@ -35,5 +35,3 @@ DELETE FROM tbl_test WHERE id = 1;
 
 
 
-
-

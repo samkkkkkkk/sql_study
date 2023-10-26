@@ -188,7 +188,18 @@ SELECT * FROM
     )
 WHERE rn > 20 AND rn <=30;
 
-
+SELECT * FROM
+    (
+    SELECT ROWNUM AS rn, tbl.*
+FROM (
+    SELECT   
+        content
+    FROM board
+    ORDER BY updatedate DESC
+      )tbl
+)
+WHERE rn >=1 AND rn <=10;
+    
 
 
 

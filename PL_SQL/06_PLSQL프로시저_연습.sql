@@ -21,6 +21,18 @@ BEGIN
     dbms_output.put_line(d_num || '의 약수의 개수: ' || d_cnt);
 END;
 
+CREATE PROCEDURE guguProc
+    (dan IN NUMBER)
+IS
+BEGIN
+    dbms_output.put_line(dan || '단');
+    FOR i IN 1..9
+    LOOP
+    dbms_output.put_line(dan || 'x' || i || '=' || dan*i);
+    END LOOP;
+END;
+
+EXEC guguProc3(2);
 
 
 CREATE OR REPLACE PROCEDURE divisor_proc
@@ -269,3 +281,44 @@ END;
 EXEC new_emp_proc(300, 'park', 'park4321', '2023-04-24', 'test');
 
 
+
+DECLARE
+    v_employee_id NUMBER := 101; -- 테스트를 위한 존재하는 사원 ID 입력
+    v_salary_in_won NUMBER;
+BEGIN
+    emp_salary_proc(v_employee_id, v_salary_in_won);
+
+    IF v_salary_in_won IS NULL THEN
+        DBMS_OUTPUT.PUT_LINE('해당 사원이 존재하지 않습니다.');
+    ELSE
+        DBMS_OUTPUT.PUT_LINE('사원의 월급(원화): ' || v_salary_in_won);
+    END IF;
+END;
+
+DECLARE 
+    v_salary NUMBER;
+BEGIN
+    emp_salary_proc(105, v_salary);
+END;
+
+CREATE OR REPLACE PROCEDURE emp_salary_proc
+    (emp_employee_id IN employees.employee_id%TYPE,
+     emp_salary OUT employees.salary%TYPE)
+IS
+    v_salary NUMBER :=1300;
+    p_salary NUMBER;
+BEGIN 
+    SELECT 
+        salary / v_salary
+    INTO
+        p_salary
+    FROM employees
+    WHERE employee_id = emp_employee_id;
+        emp_salary := p_salary;
+        
+    EXCEPTION 
+    WHEN OTHERS THEN
+    dbms_output.put_line('사원이 존재하지 않습니다.');
+END;
+
+SELECT * FROM employees;

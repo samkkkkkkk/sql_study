@@ -42,6 +42,8 @@ BEGIN
         v_type := '삭제';
     END IF;
     
+
+    
     -- 본격적인 실행 구문 작성 (backup 테이블에 값을 INSERT 
     -- -> 원본 테이블에서 UPDATE OR DELETE 된 사용자 정보 및 기타 정보)
     INSERT INTO tbl_user_backup
@@ -113,7 +115,7 @@ DECLARE
     v_total NUMBER;
     v_product_no NUMBER;
     v_product_total NUMBER;
-    quantity_shrtage_exceprion EXCEPTION;
+    quantity_shortage_exceprion EXCEPTION;
     zero_total_exception EXCEPTION;
 BEGIN
     dbms_output.put_line('트리거 실행!');
@@ -133,7 +135,7 @@ BEGIN
         
     ELSIF
         v_total > v_product_total THEN
-            RAISE quantity_shrtage_exceprion;
+            RAISE quantity_shrotage_exceprion;
        
     END IF;
     
@@ -141,7 +143,7 @@ BEGIN
     WHERE product_no = v_product_no;
     
     EXCEPTION 
-        WHEN quantity_shrtage_exceprion THEN
+        WHEN quantity_shortage_exceprion THEN
             -- 오라클에서 제공하는 사용자 정의 예외를 발생시키는 함수
             -- 첫번째 매개값: 에러 코드 (사용자 정의 예외 -20000 ~ -20999까지)
             -- 두번째 매개값: 에러 메세지
